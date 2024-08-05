@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Category>
+
+<div class="dropdown category-dropdown has-border" data-visible="true">
+    <a href="#" class="category-toggle text-dark" role="button" data-toggle="dropdown"
+       aria-haspopup="true" aria-expanded="true" data-display="static"
+       title="Browse Categories">
+        <i class="w-icon-category"></i>
+        <span>Browse Categories</span>
+    </a>
+
+        <div class="dropdown-box">
+            <ul class="menu vertical-menu category-menu">
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a href="">
+                        <i class="w-icon-heartbeat"></i>@item.Name
+                    </a>
+                </li>
+            }
+     
+                <li>
+                    <a href="shop-banner-sidebar.html"
+                    class="font-weight-bold text-primary text-uppercase ls-25">
+                        View All Categories<i class="w-icon-angle-right"></i>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+</div>

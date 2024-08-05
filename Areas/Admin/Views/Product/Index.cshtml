@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["title"] = "Product List";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutBackend.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card custom-card">
+            <div class="card-header">
+                <div class="card-title">List Product</div> -------
+                <div class="card-title">
+                    <a class="btn btn-success label-btn" asp-action="Create" asp-controller="Product"> <i class="ri-chat-smile-line label-btn-icon me-2"></i> Add Product</a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="file-export" class="table table-bordered text-nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Image</th>
+                                <th>Slug</th>
+                                <th>Stock Quantity</th>
+                                <th>Status</th>
+                                <th>Date Create</th>
+                                <th>Update Quantity</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@Html.Raw(@item.Description)</td>
+                                    <td>@item.Price</td>
+                                    <td> <img src="~/media/products/@item.Image" width="120px" height="150px" /> </td>
+                                    <td>@item.Slug</td>
+                                    <td style="color:@(item.Quantity < 1 ? "red" : "black")"
+                                        >@item.Quantity</td>
+                                    <td>
+                                        @if (item.Status == 1)
+                                        {
+                                            <span class="text text-success">Show</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text text-danger">Hide</span>
+                                        }
+                                    </td>
+                                    <td>@item.CreatedAt</td>
+                                    <td>
+                                        <a asp-action="UpdateQuantity" asp-controller="Product" asp-route-id="@item.Id" class="btn btn-primary">Update Quantity</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-icon btn-sm btn-info-transparent rounded-pill" asp-action="Edit" asp-controller="Product" asp-route-Id="@item.Id"> <i class="ri-edit-line"></i> </a>
+                                        <a class="btn btn-icon btn-sm btn-danger-transparent rounded-pill confirmDeletion" asp-action="Delete" asp-controller="Product" asp-route-Id="@item.Id"> <i class="ri-delete-bin-line"></i> </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var successAlert = document.getElementById("success-alert");
+            var errorAlert = document.getElementById("error-alert");
+
+            if (successAlert) {
+                setTimeout(function () {
+                    successAlert.style.transition = "opacity 0.5s ease-out";
+                    successAlert.style.opacity = "0";
+                    setTimeout(function () {
+                        successAlert.style.display = "none";
+                    }, 500);
+                }, 5000);
+            }
+
+            if (errorAlert) {
+                setTimeout(function () {
+                    errorAlert.style.transition = "opacity 0.5s ease-out";
+                    errorAlert.style.opacity = "0";
+                    setTimeout(function () {
+                        errorAlert.style.display = "none";
+                    }, 500);
+                }, 5000);
+            }
+        });
+    </script>
+}
+
+

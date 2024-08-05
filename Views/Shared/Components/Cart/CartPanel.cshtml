@@ -1,0 +1,8 @@
+﻿
+@model PhinaMart.ViewModels.CartModel
+<a asp-action="Index" asp-controller="Cart" class="cart-toggle label-down link">
+    <i class="w-icon-cart">
+        <span class="cart-count">@Model.Quantity</span>
+    </i>
+    <span class="cart-label">Cart</span>
+</a>

@@ -1,0 +1,118 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Edit Product";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutBackend.cshtml";
+}
+
+<div class="col-xl-12" style="margin-top:20px;">
+    <div class="card custom-card">
+
+        <div class="card-header justify-content-between">
+            <div class="card-title">
+                Edit Product
+            </div>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row mb-3">
+                    <label for="inputEmail3"
+                           class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input asp-for="Name" class="form-control">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputEmail3"
+                           class="col-sm-2 col-form-label">Price</label>
+                    <div class="col-sm-10">
+                        <input asp-for="Price" class="form-control">
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputEmail3"
+                           class="col-sm-2 col-form-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea asp-for="Description" class="form-control"> </textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputEmail3"
+                           class="col-sm-2 col-form-label">Category</label>
+                    <div class="col-sm-10">
+                        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
+                            <option>--Choose a category</option>
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputEmail3"
+                           class="col-sm-2 col-form-label">Brand</label>
+                    <div class="col-sm-10">
+                        <select asp-for="BrandId" class="form-control" asp-items="ViewBag.Brands">
+                            <option>--Choose a brand</option>
+                        </select>
+                        <span asp-validation-for="BrandId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputEmail3"
+                           class="col-sm-2 col-form-label">Image</label>
+                    <div class="col-sm-10">
+                        <input asp-for="ImageUpload" class="form-control">
+                        <span asp-validation-for="ImageUpload" class="text-danger"></span>
+                        <td> <img src="~/media/products/@Model.Image" width="120px" /> </td>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputEmail3"
+                           class="col-sm-2 col-form-label">Status</label>
+                    <div class="col-sm-10">
+                        <select asp-for="Status" class="form-control">
+                            <option value="1">Show</option>
+                            <option value="0">Hide</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for=""
+                           class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+
+            </form>
+            <a asp-action="Index">Back to list Category</a>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('Description');
+    </script>
+}
+
+

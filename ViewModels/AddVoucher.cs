@@ -1,0 +1,12 @@
+﻿namespace PhinaMart.ViewModels
+{
+    public class AddVoucher
+    {
+        public int DiscountPercentage { get; set; }
+
+        public DateOnly StartDate { get; set; }
+
+        public DateOnly EndDate { get; set; }
+     
+    }
+}

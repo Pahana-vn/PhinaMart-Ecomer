@@ -1,0 +1,92 @@
+﻿@model PhinaMart.ViewModels.LoginVm
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   
+}
+
+ <div class="container-fluid custom-page">
+    <div class="row bg-white">
+        <!-- The image half -->
+        <div class="col-md-6 col-lg-6 col-xl-7 d-none d-md-flex bg-primary-transparent-3">
+            <div class="row w-100 mx-auto text-center">
+                <div class="col-md-12 col-lg-12 col-xl-12 my-auto mx-auto w-100">
+                    <img src="~/Backend/assets/images/media/pngs/51.png"
+                         class="my-auto ht-xl-80p wd-md-100p wd-xl-80p mx-auto" alt="logo">
+                </div>
+            </div>
+        </div>
+        <!-- The content half -->
+        <div class="col-md-6 col-lg-6 col-xl-5 bg-white py-4">
+            <div class="login d-flex align-items-center py-2">
+                <!-- Demo content-->
+                <div class="container p-0">
+                    <div class="row">
+                        <div class="col-md-10 col-lg-10 col-xl-9 mx-auto">
+                            <div class="card-sigin">
+                                <div class="mb-5 d-flex" style="magin-top:50px">
+                                    <a class="header-logo">
+                                        <img src="~/Backend/assets/images/brand-logos/desktop-white1.png"
+                                             class="desktop-logo ht-40" alt="logo">
+                                        <img src="~/Backend/assets/images/brand-logos/desktop-white1.png"
+                                             class="desktop-white ht-40" alt="logo">
+                                    </a>
+                                </div>
+
+                                <div class="card-sigin">
+                                    <div class="main-signup-header">
+                                        <h3>Welcome back!</h3>
+                                        <h6 class="fw-medium mb-4 fs-17">Please sign in to continue.</h6>
+
+                                        <div class="text-danger" asp-validation-summary="All"></div>
+                                        <form asp-action="Login" asp-controller="User" asp-route-returnurl="@ViewBag.ReturnUrl">
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">User Name</label>
+                                                <input class="form-control" asp-for="Username" placeholder="Enter your email">
+                                                <span asp-validation-for="Username" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label class="form-label">Password</label>
+                                                <input class="form-control" asp-for="Password" placeholder="Enter your password">
+                                                <span asp-validation-for="Password" class="text-danger"></span>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-block w-100">Sign In</button>
+
+                                             <div class="row mt-3">
+                                                <div class="col-sm-6">
+                                                    <a asp-action="SignInFacebook" asp-controller="Auth" class="btn btn-block w-100 btn-facebook">
+                                                        <i class="fab fa-facebook-f me-2"></i> Signup with Facebook             </a>
+                                                </div>
+
+                                                <div class="col-sm-6 mt-2 mt-sm-0">
+                                                    <a asp-action="SignInGoogle" asp-controller="Auth" class="btn btn-info btn-block w-100">
+                                                        <i class="fab fa-twitter me-2"></i> Signup with Google
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        </form>
+
+                                        <div class="main-signin-footer mt-5">
+                                            <p class="mb-1"><a href="forgot.html">Forgot password?</a></p>
+                                            <p>
+                                                Don't have an account?
+                                                <a asp-action="Register" asp-controller="User"> Create an Account </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End -->
+            </div>
+        </div><!-- End -->
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,18 @@
+﻿@model IEnumerable<PhinaMart.ViewModels.MenuCategoryVM>
+
+<div class="widget widget-collapsible">
+    <h3 class="widget-title"><span>All Categories</span></h3>
+    <ul class="widget-body filter-items search-ul">
+
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" asp-controller="Product" asp-route-category="@item.Id">@item.Name</a>
+                    <span>(@item.Quantity)</span>
+                </div>
+                  
+            </li>
+        }
+    </ul>
+</div>

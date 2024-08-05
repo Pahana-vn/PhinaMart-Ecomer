@@ -1,0 +1,280 @@
+﻿@model IEnumerable<PhinaMart.ViewModels.CartItem>
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start of Breadcrumb -->
+<nav class="breadcrumb-nav">
+    <div class="container">
+        <ul class="breadcrumb shop-breadcrumb bb-no">
+            <li class="passed"><a asp-action="Index" asp-controller="Cart">Shopping Cart</a></li>
+            <li class="active"><a asp-action="Checkout" asp-controller="Cart">Checkout</a></li>
+            <li><a asp-action="Success" asp-controller="Cart">Order Complete</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- End of Breadcrumb -->
+<!-- Start of PageContent -->
+<div class="page-content">
+    <div class="container">
+        <div class="login-toggle">
+            Returning customer? <a href="#" class="show-login font-weight-bold text-uppercase text-dark">Login</a>
+        </div>
+
+        @*<form class="login-content">
+            <p>If you have shopped with us before, please enter your details below. If you are a new customer, please proceed to the Billing section.</p>
+            <div class="row">
+                <div class="col-xs-6 col-md-6">
+                    <div class="form-group">
+                        <label>Username or email *</label>
+                        <input type="text" class="form-control form-control-md" name="name" required>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-6">
+                    <div class="form-group">
+                        <label>Password *</label>
+                        <input type="password" class="form-control form-control-md" name="password" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group checkbox">
+                <input type="checkbox" class="custom-checkbox" id="remember" name="remember">
+                <label for="remember" class="mb-0 lh-2">Remember me</label>
+                <a href="#" class="ml-3">Lost your password?</a>
+            </div>
+            <button class="btn btn-rounded btn-login">Login</button>
+        </form>*@
+
+        <div class="coupon-toggle">
+            Have a coupon? <a href="#" class="show-coupon font-weight-bold text-uppercase text-dark">Enter your code</a>
+        </div>
+        <div class="coupon-content mb-4">
+            <p>If you have a coupon code, please apply it below.</p>
+            <form asp-action="SearchVoucher" asp-controller="Cart"  method="post">
+                   <div class="input-wrapper-inline">
+                    <input type="text" name="coupon_code" class="form-control form-control-md mr-1 mb-2" placeholder="Coupon code" id="coupon_code">
+                <button type="submit" class="btn button btn-rounded btn-coupon mb-2" name="apply_coupon" value="Apply coupon">Apply Coupon</button>
+            </div>
+            </form>
+         
+        </div>
+
+        <form class="form checkout-form" asp-action="Checkout" asp-controller="Cart" asp-route-total="@ViewBag.Total">
+            <div class="row mb-9">
+                <div class="col-lg-7 pr-lg-4 mb-4">
+                    <h3 class="title billing-title text-uppercase ls-10 pt-1 pb-3 mb-0">Billing Details</h3>
+                    <div class="form-group pb-2">
+                        <input type="checkbox" class="custom-checkbox" id="GiongKhachHang" name="GiongKhachHang">
+                        <label for="GiongKhachHang">Same with customer information</label>
+                    </div>
+                    <div class="form-group delivery-info">
+                        <label>Receiver *</label>
+                        <input type="text" class="form-control form-control-md" name="UserName">
+                    </div>
+                    <div class="checkbox-content">
+                        <div class="form-group delivery-info">
+                            <label>Address *</label>
+                            <input type="text" placeholder="House number and street name" class="form-control form-control-md mb-2" name="Address">
+                        </div>
+                        <div class="row gutter-sm">
+                            <div class="col-xs-6 col-md-6">
+                                <div class="form-group delivery-info">
+                                    <label>Phone *</label>
+                                    <input type="number" class="form-control form-control-md" name="Phone">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-md-6">
+                                <div class="form-group delivery-info">
+                                    <label>Email *</label>
+                                    <input type="email" class="form-control form-control-md" name="Email">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="order-notes">Order notes (optional)</label>
+                        <textarea class="form-control mb-0" id="order-notes" name="Note" cols="30" rows="4" placeholder="Notes about your order, e.g special notes for delivery"></textarea>
+                    </div>
+                    
+                </div>
+
+                <div class="col-lg-5 mb-4 sticky-sidebar-wrapper">
+                    <div class="order-summary-wrapper sticky-sidebar">
+                        <h3 class="title text-uppercase ls-10">Your Order</h3>
+                        <div class="order-summary">
+                            <table class="order-table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2"><b>Product</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr class="bb-no">
+                                            <td class="product-name">@item.Name <i class="fas fa-times"></i> <span class="product-quantity">@item.Quantity</span></td>
+                                            <td class="product-total">$@item.IntoMoney</td>
+                                        </tr>
+                                    }
+                                    <tr class="cart-subtotal bb-no">
+                                        <td><b>Subtotal</b></td>
+                                        <td><b>$@Model.Sum(p => p.IntoMoney)</b></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="shipping-methods">
+                                        <td colspan="2" class="text-left">
+                                            <h4 class="title title-simple bb-no mb-1 pb-0 pt-3">Shipping</h4>
+                                            <ul id="shipping-method" class="mb-4">
+                                                <li>
+                                                    <div class="custom-radio">
+                                                        <input type="radio" id="free-shipping" class="custom-control-input" name="shipping">
+                                                        <label for="free-shipping" class="custom-control-label color-dark">Free Shipping</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="custom-radio">
+                                                        <input type="radio" id="local-pickup" class="custom-control-input" name="shipping">
+                                                        <label for="local-pickup" class="custom-control-label color-dark">Local Pickup</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="custom-radio">
+                                                        <input type="radio" id="flat-rate" class="custom-control-input" name="shipping">
+                                                        <label for="flat-rate" class="custom-control-label color-dark">Flat rate: $5.00</label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="order-total">
+                                        <th><b>Total</b></th>
+                                        <td><b>$@ViewBag.Total</b></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group place-order pt-6">
+                        <input type="submit" name="payment" class="btn btn-dark btn-block btn-rounded" value="Place order (COD)" />
+                    </div>
+
+                    <input type="submit" name="payment" class="btn border-secondary text-uppercase text-primary w-100 mt-2" value="Thanh toán VNPay">
+
+                    <div id="paypal-button-container" class="form-item mt-3" style="max-width:1000px;"></div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End of PageContent -->
+@section Scripts {
+    <script src="https://www.paypal.com/sdk/js?client-id=@ViewBag.PaypalClientdId"></script>
+    <script>
+        $(document).ready(function () {
+            $("#GiongKhachHang").change(function () {
+                if ($(this).prop("checked")) {
+                    $(this).val(true);
+                    $(".delivery-info").addClass("d-none");
+                } else {
+                    $(this).val(false);
+                    $(".delivery-info").removeClass("d-none");
+                }
+            });
+        });
+
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color: 'silver',
+                tagline: 'false'
+            },
+            createOrder: (data, actions) => {
+                return fetch("/Cart/create-paypal-order", {
+                    method: "post",
+                }).then((response) => {
+                    if (!response.ok) {
+                        return response.json().then(error => { throw error; });
+                    }
+
+                    return response.json();
+                }).then((order) => order.id)
+                    .catch(error => alert(error.message));
+            },
+            onApprove: (data, actions) => {
+                return fetch(`/Cart/capture-paypal-order?orderId=${data.orderID}`, {
+                    method: "post",
+                }).then((response) => {
+                    if (!response.ok) {
+                        return response.json().then(error => { throw error; });
+                    }
+
+                    //Đổi địa chỉ tới action thông báo thành công
+                    window.location.href = "/Cart/PaymentSuccess";
+                }).catch(error => alert(error.message));
+            }
+        }).render('#paypal-button-container');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+        @if (TempData["Message"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: '@TempData["Message"]',
+                    });
+            </text>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: '@TempData["Success"]',
+                    });
+            </text>
+        }
+        @if (TempData["Exist"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '@TempData["Exist"]',
+                    });
+            </text>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '@TempData["Error"]',
+                    });
+            </text>
+        }
+                                            });
+        function updateStars(rating) {
+            var stars = document.querySelectorAll('.rating-stars a');
+            stars.forEach(function (star, index) {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+    </script>
+
+}
+

@@ -1,0 +1,100 @@
+﻿@model PhinaMart.ViewModels.AddVoucher
+@using System.Security.Claims
+@{
+    ViewData["title"] = "Create Voucher";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutBackend.cshtml";
+}
+<div class="col-xl-12" style="margin-top:20px;">
+    <div class="card custom-card">
+
+        <div class="card-header justify-content-between">
+            <div class="card-title">
+                Create Voucher
+            </div>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="AddVoucher" asp-controller="voucher" method="post">
+                <div class="row mb-3">
+                    <label for="inputEmail3"
+                           class="col-sm-2 col-form-label">Discount Percentage</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" asp-for="@Model.DiscountPercentage">
+
+                    </div>
+                    <div class="row mb-3" style="margin-top:11px;">
+                        <label for="inputEmail3"
+                               class="col-sm-2 col-form-label">Start Date</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" style="margin-left:3px;width:102.5%" name="StartDate" asp-for="@Model.StartDate">
+
+                        </div>
+
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputEmail3"
+                               class="col-sm-2 col-form-label">End Date</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" asp-for="@Model.EndDate" name="EndDate" style="margin-left:3px;width:102.5%">
+
+                        </div>
+
+                    </div>
+                  
+
+                    <div class="row mb-3">
+                        <label for="" class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </div>
+
+
+                </div>
+                </form>
+        
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card custom-card">
+            <div class="card-header">
+                <div class="card-title">List Voucher</div> 
+                
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="file-export" class="table table-bordered text-nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                               <th>Code</th>
+                                    <th>Discount Percentage</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                                @for (int i = 0; i < ViewBag.voucher.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@(i+1)</td>
+                                        <td>@ViewBag.voucher[i].Code</td>
+                                        <td>@ViewBag.voucher[i].DiscountPercentage</td>
+                                        <td>@ViewBag.voucher[i].StartDate.ToString("MMMM dd, yyyy ")</td>
+                                        <td>@ViewBag.voucher[i].EndDate.ToString("MMMM dd, yyyy ")</td>
+                                       
+                                    </tr>
+                                }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

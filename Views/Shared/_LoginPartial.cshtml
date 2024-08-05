@@ -1,0 +1,59 @@
+﻿@model PhinaMart.ViewModels.LoginVm
+
+<!-- Start of Main -->
+            <div class="login-popup">
+                <div class="tab tab-nav-boxed tab-nav-center tab-nav-underline">
+                    <ul class="nav nav-tabs text-uppercase" role="tablist">
+
+                          <li class="nav-item">
+                            <a asp-action="Login" asp-controller="User" asp-route-returnurl="@ViewBag.ReturnUrl" class="nav-link active">Sign In</a>
+                        </li>
+
+                         <li class="nav-item">
+                            <a asp-action="Register" asp-controller="User" asp-route-returnurl="@ViewBag.ReturnUrl" class="nav-link">Register</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <form asp-action="Login" asp-controller="User" asp-route-returnurl="@ViewBag.ReturnUrl">
+                <div class="tab-pane active" id="sign-in">
+                    <div class="form-group">
+                        <label>Username *</label>
+                        <input asp-for="Username" class="form-control">
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label>Password *</label>
+                        <input asp-for="Password" class="form-control">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-checkbox d-flex align-items-center justify-content-between">
+                        <input type="checkbox" class="custom-checkbox" id="remember1" name="remember1" required="">
+                        <label for="remember1">Remember me</label>
+                        <a href="#">Last your password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </div>
+            </form>
+                        
+                    </div>
+                    <p class="text-center">Sign in with social account</p>
+                    <div class="social-icons social-icon-border-color d-flex justify-content-center">
+                        <a href="#" class="social-icon social-facebook w-icon-facebook"></a>
+                        <a href="#" class="social-icon social-twitter w-icon-twitter"></a>
+                        <a href="#" class="social-icon social-google fab fa-google"></a>
+                    </div>
+                </div>
+            </div>
+<!-- End of Main -->
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

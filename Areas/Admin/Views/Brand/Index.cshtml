@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Brand>
+@{
+    ViewData["Title"] = "Index Brand";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutBackend.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card custom-card">
+            <div class="card-header">
+                <div class="card-title">List Brand</div> -------
+                <div class="card-title">
+                    <a class="btn btn-success label-btn" asp-action="Create" asp-controller="Brand"> <i class="ri-chat-smile-line label-btn-icon me-2"></i> Add Brand</a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="file-export" class="table table-bordered text-nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Slug</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.CompanyName</td>
+                                    <td>@item.Description</td>
+                                    <td>@item.Slug</td>
+                                    <td>
+                                        @if (item.Status == 1)
+                                        {
+                                            <span class="text text-success">Show</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text text-danger">Hide</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-icon btn-sm btn-info-transparent rounded-pill" asp-action="Edit" asp-controller="Brand" asp-route-Id="@item.Id"> <i class="ri-edit-line"></i> </a>
+                                        <a class="btn btn-icon btn-sm btn-danger-transparent rounded-pill confirmDeletion" asp-action="Delete" asp-controller="Brand" asp-route-Id="@item.Id"> <i class="ri-delete-bin-line"></i> </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,80 @@
+﻿@model PhinaMart.Areas.Admin.SubModel.UpdateQuantity
+
+@{
+    ViewData["Title"] = "Update Quantity";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutBackend.cshtml";
+}
+
+<div class="col-xl-12" style="margin-top:20px;">
+    <div class="card custom-card">
+        <div class="card-header justify-content-between">
+            <div class="card-title">
+                Update Quantity
+            </div>
+        </div>
+        <div class="card-body">
+            <!--@if (TempData["Success"] != null)
+            {
+                    <div class="alert alert-success" id="success-alert">
+                    @TempData["Success"]
+                    </div>
+            }-->
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger" id="error-alert">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <form asp-action="UpdateFunctionQuantity" asp-controller="Product" asp-route-id="@ViewBag.Product.Id" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row mb-3">
+                    <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="Quantity" class="form-control" id="quantity" asp-for="@Model.Quantity">
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <button class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+            <a asp-action="Index" asp-controller="Product">Back to list</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var successAlert = document.getElementById("success-alert");
+            var errorAlert = document.getElementById("error-alert");
+
+            /*if (successAlert) {
+                setTimeout(function () {
+                    successAlert.style.transition = "opacity 0.5s ease-out";
+                    successAlert.style.opacity = "0";
+                    setTimeout(function () {
+                        successAlert.style.display = "none";
+                    }, 500);
+                }, 5000);
+            }*/
+
+            if (errorAlert) {
+                setTimeout(function () {
+                    errorAlert.style.transition = "opacity 0.5s ease-out";
+                    errorAlert.style.opacity = "0";
+                    setTimeout(function () {
+                        errorAlert.style.display = "none";
+                    }, 500);
+                }, 5000);
+            }
+        });
+    </script>
+}
